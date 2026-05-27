@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - QR Attendance System</title>
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f8fafc;
+            padding: 1.5rem;
+            overflow-x: hidden;
+        }
+
+        .welcome-container {
+            max-width: 960px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .title-gradient {
+            font-weight: 800;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #818cf8, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 3.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* Glassmorphic Portal Cards */
+        .portal-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            padding: 3.5rem 2.5rem;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            color: #f8fafc;
+            display: flex;
+            flex-column: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .portal-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .portal-card:hover::before {
+            opacity: 1;
+        }
+
+        .icon-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.75rem;
+            margin-bottom: 2rem;
+            transition: var(--transition-smooth);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-card:hover .icon-circle {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+            transform: scale(1.05);
+        }
+
+        .student-card:hover .icon-circle {
+            color: #818cf8;
+            background: rgba(129, 140, 248, 0.15);
+            border-color: rgba(129, 140, 248, 0.3);
+            box-shadow: 0 0 30px rgba(129, 140, 248, 0.3);
+            transform: scale(1.05);
+        }
+
+        .portal-title {
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .portal-desc {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .arrow-indicator {
+            margin-top: 1.5rem;
+            font-size: 1.25rem;
+            transition: var(--transition-smooth);
+            color: #64748b;
+        }
+
+        .portal-card:hover .arrow-indicator {
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="welcome-container">
+    <!-- Hero Text -->
+    <h1 class="title-gradient">QR Attendance System</h1>
+    <p class="subtitle">A modern, contactless student attendance management suite. Please choose your portal to continue.</p>
+
+    <!-- Portal Choices -->
+    <div class="row g-4 justify-content-center">
+        <!-- Student Card -->
+        <div class="col-md-6 col-lg-5" style="animation: fadeInUp 0.8s ease 0.4s both;">
+            <a href="/student" class="portal-card student-card">
+                <div class="icon-circle text-indigo">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <h3 class="portal-title">Student Portal</h3>
+                <p class="portal-desc">Access your private attendance history, class logs, statistics, and track your attendance record across all active classes.</p>
+                <div class="arrow-indicator"><i class="bi bi-arrow-right"></i></div>
+            </a>
+        </div>
+
+        <!-- Admin Card -->
+        <div class="col-md-6 col-lg-5" style="animation: fadeInUp 0.8s ease 0.6s both;">
+            <a href="/admin" class="portal-card admin-card">
+                <div class="icon-circle text-info">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <h3 class="portal-title">Admin Portal</h3>
+                <p class="portal-desc">Manage student profiles, initialize live attendance QR codes, pause scanning, and export comprehensive attendance sheets to Excel.</p>
+                <div class="arrow-indicator"><i class="bi bi-arrow-right"></i></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
